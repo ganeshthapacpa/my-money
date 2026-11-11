@@ -1,0 +1,15 @@
+{
+  "name": "My Money: Budget & Goals",
+  "short_name": "My Money",
+  "description": "Budgets, goals, debt payoff and net worth, synced across your devices.",
+  "start_url": "app.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F1F4F1",
+  "theme_color": "#0B3D33",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

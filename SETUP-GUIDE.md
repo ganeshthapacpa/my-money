@@ -5,7 +5,7 @@ What you're putting online:
 | Address | Page |
 |---|---|
 | `/` | Homepage (landing page) |
-| `/app/` | The app, with sign-in and sync |
+| `/app.html` | The app, with sign-in and sync |
 | `/privacy.html` | Privacy policy |
 | `/support.html` | Support page |
 
@@ -28,11 +28,11 @@ At this point the app already works in "no account" mode, with data saved in eac
 1. Go to **supabase.com**, sign up (free), and click **New project**.
 2. Name it `my-money`, create a strong database password and save it somewhere safe, and pick the region closest to you (for example *East US*).
 3. When the project is ready, open **SQL Editor > New query**.
-4. Open `supabase/setup.sql` from this folder, copy everything, paste it in, and click **Run**. You should see "Success".
+4. Open `supabase-setup.sql` from this folder, copy everything, paste it in, and click **Run**. You should see "Success".
 
 ## Step 3 – Set up sign-in
 1. In Supabase, go to **Authentication > URL Configuration**:
-   * **Site URL:** `https://YOUR-GITHUB-NAME.github.io/my-money/app/`
+   * **Site URL:** `https://YOUR-GITHUB-NAME.github.io/my-money/app.html`
    * **Redirect URLs:** add the same address.
 2. **Email sending (important):** Supabase's built-in email only sends to your own team's addresses and only a few per hour. That's fine for testing, but before other people sign up, connect a free email service:
    * Create a free account at **resend.com** (3,000 emails a month free) and get an SMTP password (API key).
@@ -48,8 +48,8 @@ At this point the app already works in "no account" mode, with data saved in eac
 1. In Supabase, go to **Project Settings > API Keys** (or **Data API**). Copy:
    * the **Project URL**, which looks like `https://abcd1234.supabase.co`
    * the **anon / publishable** key. Never use the `service_role` or secret key.
-2. On GitHub, open `app/config.js`, click the pencil icon, and replace the two placeholder values. Click **Commit changes**.
-3. Wait a minute, then open `https://YOUR-GITHUB-NAME.github.io/my-money/app/`. You should see **Welcome back** with Sign in and Create account.
+2. On GitHub, open `config.js`, click the pencil icon, and replace the two placeholder values. Click **Commit changes**.
+3. Wait a minute, then open `https://YOUR-GITHUB-NAME.github.io/my-money/app.html`. You should see **Welcome back** with Sign in and Create account.
 
 The anon key is designed to be public. Your data is protected by the security rules in `setup.sql`, which let each person read and change only their own rows.
 
@@ -67,15 +67,18 @@ The anon key is designed to be public. Your data is protected by the security ru
 
 ## Good to know
 * **Free plan limits:** Supabase free projects pause after about 7 days with no activity. If that happens, open the Supabase dashboard and click **Restore**. Once people use the site regularly, it stays awake. The paid plan ($25 a month) never pauses and adds daily backups.
-* **Updating the site:** edit or upload files on GitHub. Changes go live in about a minute. If you change `app/index.html`, also change `my-money-app-v2` in `app/sw.js` to `v3` (and so on), so phones pick up the new version.
+* **Updating the site:** edit or upload files on GitHub. Changes go live in about a minute. If you change `app.html`, also change `my-money-v3` in `sw.js` to `v4` (and so on), so phones pick up the new version.
 * **Your own domain (optional, about $12 a year):** buy a domain (for example at Cloudflare or Namecheap). Then on GitHub go to **Settings > Pages > Custom domain**. Afterwards, update the Site URL and Redirect URLs in Supabase to the new address.
 * **Your responsibility:** once other people sign up, you're holding their financial information. Keep your Supabase and GitHub passwords strong, turn on two-factor sign-in for both, and never share the `service_role` key.
 
 ## What's in this folder
-| Path | What it is |
+All files sit in one folder (no subfolders), so they upload in a single drag.
+| File | What it is |
 |---|---|
 | `index.html` | Homepage |
-| `app/` | The app (`config.js` holds your Supabase settings) |
+| `app.html` | The app |
+| `config.js` | Your Supabase settings |
 | `privacy.html`, `support.html` | Policy and help pages |
-| `assets/` | Fonts, icons and screenshots |
-| `supabase/setup.sql` | Database tables and security rules |
+| `supabase-setup.sql` | Database tables and security rules (paste into Supabase, not needed on the website) |
+| `.woff2`, `.png`, `.webp` files | Fonts, icons and screenshots |
+| `sw.js`, `manifest.webmanifest`, `supabase.js` | Offline support, home-screen install, sign-in library |
