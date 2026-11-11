@@ -65,6 +65,32 @@ The anon key is designed to be public. Your data is protected by the security ru
 
 ---
 
+## Security checklist (do all of these before sharing the site)
+**Already built in**
+* Database security rules: each person can only read and change their own rows. Signed-out visitors get nothing. Tested against attempts to read, change or delete someone else's data.
+* Size limits per row and valid-month checks, so nobody can flood your database.
+* A Content Security Policy that blocks scripts from anywhere except your own site, plus a check that cleans every piece of saved or imported data before it's shown.
+* The sign-in library is stored on your site, not loaded from another website.
+* The app refuses to run if a secret Supabase key is ever pasted into `config.js`.
+
+**Supabase settings (dashboard)**
+1. **Authentication > Sign In / Providers > Email:**
+   * keep **Confirm email** on
+   * set **Minimum password length** to **10**
+   * set **Password requirements** to *letters and digits*
+   * turn on **Secure email change**
+2. **Authentication > Rate Limits:** keep the defaults. They block password-guessing and spam sign-ups.
+3. **Authentication > Attack Protection:** turn on **CAPTCHA protection** (Cloudflare Turnstile is free) if you ever see spam sign-ups. Tell me and I'll add the CAPTCHA box to the sign-in page.
+4. **Advisors > Security Advisor:** open it after running the SQL. It should show no errors.
+5. **Never** put the `service_role` or `sb_secret_` key anywhere on GitHub. If it ever leaks, go to **Project Settings > API Keys** and rotate it.
+
+**Your accounts**
+* Turn on **two-factor authentication** for GitHub (**Settings > Password and authentication**) and Supabase (**Account > Security**). If someone takes over either account, they could change the site or read the database, so this matters most.
+* Use a strong, unique password for each, ideally from a password manager.
+* Only you should be a collaborator on the GitHub repository.
+
+---
+
 ## Good to know
 * **Free plan limits:** Supabase free projects pause after about 7 days with no activity. If that happens, open the Supabase dashboard and click **Restore**. Once people use the site regularly, it stays awake. The paid plan ($25 a month) never pauses and adds daily backups.
 * **Updating the site:** edit or upload files on GitHub. Changes go live in about a minute. If you change `app.html`, also change `my-money-v3` in `sw.js` to `v4` (and so on), so phones pick up the new version.
@@ -81,4 +107,5 @@ All files sit in one folder (no subfolders), so they upload in a single drag.
 | `privacy.html`, `support.html` | Policy and help pages |
 | `supabase-setup.sql` | Database tables and security rules (paste into Supabase, not needed on the website) |
 | `.woff2`, `.png`, `.webp` files | Fonts, icons and screenshots |
+| `app.js`, `site.js` | The app's and homepage's code |
 | `sw.js`, `manifest.webmanifest`, `supabase.js` | Offline support, home-screen install, sign-in library |

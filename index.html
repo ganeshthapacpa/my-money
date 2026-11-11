@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; worker-src 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>My Money – Budget, goals and debt payoff in one calm app</title>
 <meta name="description" content="My Money is a free personal finance app. See what's safe to spend today, keep budgets on track, plan your debt-free date and save for goals, on your phone and computer.">
@@ -323,11 +325,6 @@ footer a:hover{color:var(--ink)}
     <nav aria-label="Footer"><a href="privacy.html">Privacy</a><a href="support.html">Support</a><a href="app.html">Sign in</a></nav>
   </div>
 </footer>
-<script>
-document.getElementById("yr").textContent = new Date().getFullYear();
-const nav = document.getElementById("nav");
-const onScroll = () => nav.classList.toggle("scrolled", scrollY > 8);
-addEventListener("scroll", onScroll, { passive: true }); onScroll();
-</script>
+<script src="site.js"></script>
 </body>
 </html>
