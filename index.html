@@ -5,173 +5,262 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; worker-src 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>My Money – Budget, goals and debt payoff in one calm app</title>
-<meta name="description" content="My Money is a free personal finance app. See what's safe to spend today, keep budgets on track, plan your debt-free date and save for goals, on your phone and computer.">
+<title>My Money – Know what's safe to spend, every day</title>
+<meta name="description" content="My Money is a free personal finance app. See what's safe to spend today, keep budgets on track, plan your debt-free date and save for goals, on your phone and computer. No bank logins.">
 <meta name="theme-color" content="#0B3D33">
-<meta property="og:title" content="My Money – Budget, goals and debt payoff">
-<meta property="og:description" content="See what's safe to spend today, keep budgets on track and find your debt-free date. Free, private, no bank logins.">
-<meta property="og:image" content="screen-home.webp">
-<link rel="icon" href="icon-192.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="My Money">
+<meta property="og:title" content="My Money – Know what's safe to spend, every day">
+<meta property="og:description" content="Budgets, a debt-free date and savings goals in one calm, private app. Free, no bank logins.">
+<meta property="og:image" content="https://ganeshthapacpa.github.io/my-money/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{font-family:"Bricolage Grotesque";src:url(bricolage.woff2) format("woff2");font-weight:200 800;font-display:swap}
 @font-face{font-family:"Figtree";src:url(figtree-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Figtree";src:url(figtree-500.woff2) format("woff2");font-weight:500;font-display:swap}
 @font-face{font-family:"Figtree";src:url(figtree-600.woff2) format("woff2");font-weight:600;font-display:swap}
 @font-face{font-family:"Figtree";src:url(figtree-700.woff2) format("woff2");font-weight:700;font-display:swap}
-/* Layout: centered 1120px column; split hero with phone mockups; alternating feature rows; dark privacy band; FAQ; closing CTA. */
+/* Layout: 1160px column. Hero split (copy | phone with floating cards) on a soft ledger-grid ground;
+   interactive safe-to-spend calculator; tabbed product tour; comparison table; privacy band; pricing; FAQ; footer columns. */
 :root{
-  --bg:#F1F4F1; --surface:#FFFFFF; --surface-2:#E7ECE7; --ink:#13201C; --muted:#5D6A65; --line:#DAE1DB;
-  --accent:#0E6B57; --accent-ink:#FFFFFF; --accent-soft:#D5EAE2; --deep:#0B3D33; --deep-ink:#EAF5F0; --deep-muted:#A9CFC2; --gold:#F0C35A;
+  --bg:#F3F6F3; --bg-2:#EAF0EB; --surface:#FFFFFF; --surface-2:#E6ECE7; --ink:#10201B; --muted:#56655F; --line:#D7DFD9;
+  --accent:#0E6B57; --accent-ink:#FFFFFF; --accent-soft:#D3E9E0; --deep:#0B3D33; --deep-2:#0E4A3E; --deep-ink:#EAF5F0; --deep-muted:#A9CFC2; --gold:#F0C35A; --gold-ink:#2A2006;
+  --good:#1D8657; --bad:#C2412D;
   --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
-  --shadow:0 30px 60px -20px rgba(11,61,51,.35),0 8px 20px -8px rgba(11,61,51,.2);
+  --shadow:0 40px 80px -30px rgba(11,61,51,.45),0 10px 24px -12px rgba(11,61,51,.25);
+  --shadow-sm:0 1px 2px rgba(16,32,27,.06),0 8px 24px -10px rgba(16,32,27,.12);
+  --grid:rgba(14,107,87,.07);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0C1412; --surface:#141F1C; --surface-2:#1C2A26; --ink:#E7EFEB; --muted:#93A39D; --line:#26352F;
-  --accent:#43C29C; --accent-ink:#05231B; --accent-soft:#163A31; --deep:#0F3B31; --deep-ink:#EAF5F0; --deep-muted:#9BC9B9;
-  --shadow:0 30px 60px -20px rgba(0,0,0,.6); color-scheme:dark }}
+  --bg:#0B1311; --bg-2:#0F1A17; --surface:#131E1B; --surface-2:#1B2925; --ink:#E7EFEB; --muted:#94A49E; --line:#24332E;
+  --accent:#43C29C; --accent-ink:#05231B; --accent-soft:#163A31; --deep:#0F3B31; --deep-2:#124538; --deep-ink:#EAF5F0; --deep-muted:#9BC9B9;
+  --good:#4CC38A; --bad:#F07A62; --shadow:0 40px 80px -30px rgba(0,0,0,.7); --shadow-sm:0 1px 2px rgba(0,0,0,.4); --grid:rgba(67,194,156,.06); color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#0C1412; --surface:#141F1C; --surface-2:#1C2A26; --ink:#E7EFEB; --muted:#93A39D; --line:#26352F;
-  --accent:#43C29C; --accent-ink:#05231B; --accent-soft:#163A31; --deep:#0F3B31; --deep-ink:#EAF5F0; --deep-muted:#9BC9B9;
-  --shadow:0 30px 60px -20px rgba(0,0,0,.6); color-scheme:dark }
+  --bg:#0B1311; --bg-2:#0F1A17; --surface:#131E1B; --surface-2:#1B2925; --ink:#E7EFEB; --muted:#94A49E; --line:#24332E;
+  --accent:#43C29C; --accent-ink:#05231B; --accent-soft:#163A31; --deep:#0F3B31; --deep-2:#124538; --deep-ink:#EAF5F0; --deep-muted:#9BC9B9;
+  --good:#4CC38A; --bad:#F07A62; --shadow:0 40px 80px -30px rgba(0,0,0,.7); --shadow-sm:0 1px 2px rgba(0,0,0,.4); --grid:rgba(67,194,156,.06); color-scheme:dark }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:84px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-h1,h2,h3{font-family:var(--f-display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);letter-spacing:-.022em;margin:0;text-wrap:balance}
 p{margin:0}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;padding:14px 22px;font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.num{font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;padding:14px 22px;font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;white-space:nowrap}
 .btn:hover{transform:translateY(-1px)}
-.btn-primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 10px 24px -10px rgba(14,107,87,.6)}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 12px 28px -12px rgba(14,107,87,.7)}
 .btn-ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
-.btn-gold{background:var(--gold);color:#1F1A08}
-.eyebrow{font-size:13px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.btn-gold{background:var(--gold);color:var(--gold-ink)}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.sec-head{max-width:680px;margin-bottom:44px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head h2{font-size:clamp(32px,4.4vw,50px);line-height:1.05;margin-top:12px}
+.sec-head p{color:var(--muted);margin-top:16px;font-size:18.5px}
+section{padding:96px 0}
 
 /* nav */
-header.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top,0px)}
-header.nav.scrolled{border-bottom-color:var(--line)}
-.nav .wrap{display:flex;align-items:center;gap:24px;height:68px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:-.01em}
-.logo img{width:34px;height:34px;border-radius:10px}
-.nav-links{display:flex;gap:26px;margin-left:auto;font-weight:600;font-size:15px}
-.nav-links a{text-decoration:none;color:var(--muted)}
+header.nav{position:sticky;top:0;z-index:30;padding-top:env(safe-area-inset-top,0px);transition:background .2s ease,border-color .2s ease;border-bottom:1px solid transparent}
+header.nav.scrolled{background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px);border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:-.015em}
+.logo svg{width:34px;height:34px;flex:none}
+.nav-links{display:flex;gap:28px;margin-left:auto;font-weight:600;font-size:15px}
+.nav-links a{text-decoration:none;color:var(--muted);transition:color .15s}
 .nav-links a:hover{color:var(--ink)}
 .nav-cta{display:flex;gap:10px}
 .nav-cta .btn{padding:10px 16px;font-size:15px;border-radius:12px}
-@media (max-width:820px){.nav-links{display:none}.nav-cta{margin-left:auto}.nav-cta .signin{display:none}}
+@media (max-width:880px){.nav-links{display:none}.nav-cta{margin-left:auto}}
+@media (max-width:420px){.nav-cta .signin{display:none}}
 
 /* hero */
-.hero{padding:56px 0 40px}
-.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
-.hero h1{font-size:clamp(40px,6.2vw,72px);line-height:1.02;margin:14px 0 20px}
-.hero h1 em{font-style:normal;color:var(--accent);position:relative;white-space:nowrap}
-.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.16em;background:var(--gold);opacity:.55;border-radius:4px;z-index:-1}
-.hero .lead{font-size:19px;color:var(--muted);max-width:34ch}
-.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 18px}
-.trust{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--muted);font-weight:500}
-.trust span{display:inline-flex;align-items:center;gap:6px}
-.trust svg{width:16px;height:16px;color:var(--accent)}
-.phones{position:relative;height:600px}
-.phone{position:absolute;width:280px;border-radius:40px;background:#0A0F0D;padding:10px;box-shadow:var(--shadow)}
-.phone img{border-radius:31px;width:100%;height:auto}
-.phone.front{right:16%;top:0;z-index:2}
-.phone.back{right:52%;top:70px;transform:rotate(-6deg);opacity:.96}
-.float-card{position:absolute;z-index:3;right:0;bottom:60px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;box-shadow:var(--shadow);width:220px}
-.float-card .k{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-.float-card .v{font-family:var(--f-display);font-size:26px;font-weight:700;margin-top:2px}
-.float-card .s{font-size:13px;color:var(--muted)}
-@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.phones{height:520px;max-width:440px;width:100%;margin:0 auto}.phone{width:240px}.phone.front{right:6%}.phone.back{right:44%}}
-@media (max-width:480px){.phones{height:440px}.phone{width:200px;border-radius:32px;padding:8px}.phone img{border-radius:25px}.float-card{width:190px;bottom:20px}}
+.hero{position:relative;padding:48px 0 72px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-72px 0 0;z-index:-1;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 70% 30%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 70% 70% at 70% 30%,#000 30%,transparent 75%)}
+.hero::after{content:"";position:absolute;right:-10%;top:-20%;width:720px;height:720px;z-index:-1;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 22%,transparent),transparent 65%)}
+.hero .wrap{display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center}
+.hero .wrap>*{min-width:0}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--muted);box-shadow:var(--shadow-sm)}
+.pill b{background:var(--accent-soft);color:var(--accent);padding:3px 9px;border-radius:999px;font-size:12.5px;letter-spacing:.02em}
+.hero h1{font-size:clamp(44px,6.6vw,80px);line-height:.98;margin:22px 0 22px;letter-spacing:-.035em}
+.hero h1 .hl{color:var(--accent);position:relative;white-space:nowrap}
+.hero h1 .hl::after{content:"";position:absolute;left:-2px;right:-2px;bottom:.05em;height:.18em;background:var(--gold);opacity:.6;border-radius:4px;z-index:-1}
+.hero .lead{font-size:19.5px;color:var(--muted);max-width:36ch}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0 22px}
+.trust{display:flex;gap:20px;flex-wrap:wrap;font-size:14.5px;color:var(--muted);font-weight:500}
+.trust span{display:inline-flex;align-items:center;gap:7px}
+.trust svg{width:17px;height:17px;color:var(--accent);flex:none}
 
-/* sections */
-section{padding:80px 0}
-.sec-head{max-width:640px;margin-bottom:44px}
-.sec-head h2{font-size:clamp(30px,4.2vw,46px);line-height:1.08;margin-top:10px}
-.sec-head p{color:var(--muted);margin-top:14px;font-size:18px}
+.stage{position:relative;height:640px}
+.phone{position:absolute;left:50%;top:0;width:296px;transform:translateX(-50%);border-radius:46px;background:#070B0A;padding:11px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.06)}
+.phone img{border-radius:36px;width:100%;height:auto}
+.fcard{position:absolute;z-index:3;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:13px 16px;box-shadow:var(--shadow);animation:float 6s ease-in-out infinite}
+.fcard .k{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fcard .v{font-family:var(--f-display);font-size:26px;font-weight:700;margin-top:2px;letter-spacing:-.01em}
+.fcard .s{font-size:13px;color:var(--muted)}
+.fcard.a{left:0;top:330px}
+.fcard.b{right:0;bottom:110px;animation-delay:-3s}
+.fcard .row{display:flex;align-items:center;gap:10px}
+.fcard .ico{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.fcard .ico svg{width:18px;height:18px}
+.fcard .v.gold{color:var(--accent)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media (max-width:960px){.hero .wrap{grid-template-columns:1fr}.stage{height:600px;max-width:520px;width:100%;margin:0 auto}}
+@media (max-width:520px){.stage{height:520px}.phone{width:250px;border-radius:40px}.phone img{border-radius:31px}.fcard{padding:10px 12px}.fcard .v{font-size:21px}.fcard.a{top:270px}.fcard.b{bottom:70px}}
+
+/* calculator */
+.calc{background:var(--deep);color:var(--deep-ink);border-radius:32px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1fr 1fr;gap:48px;position:relative;overflow:hidden}
+.calc::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;pointer-events:none}
+.calc>*{position:relative;min-width:0}
+.calc .eyebrow{color:var(--gold)}
+.calc h2{font-size:clamp(30px,4vw,44px);line-height:1.06;margin-top:12px}
+.calc p.sub{color:var(--deep-muted);margin-top:14px;font-size:18px}
+.ctrl{margin-top:26px}
+.ctrl label{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;font-size:15px;color:var(--deep-muted);margin-bottom:10px}
+.ctrl label output{font-family:var(--f-display);font-size:22px;color:var(--deep-ink);font-weight:700}
+input[type=range]{width:100%;accent-color:var(--gold);height:28px}
+.result{background:var(--deep-2);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:32px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.result .k{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--deep-muted)}
+.result .big{font-family:var(--f-display);font-size:clamp(56px,8vw,88px);font-weight:700;line-height:1;letter-spacing:-.03em}
+.result .note{color:var(--deep-muted);font-size:16px}
+.result .note b{color:var(--gold)}
+.result .bar{height:10px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:18px}
+.result .bar i{display:block;height:100%;background:var(--gold);border-radius:99px;transition:width .3s ease}
+.result .legend{display:flex;justify-content:space-between;font-size:13px;color:var(--deep-muted);margin-top:6px}
+.result .btn{margin-top:20px;align-self:flex-start}
+@media (max-width:860px){.calc{grid-template-columns:1fr;border-radius:24px}}
+
+/* tour */
+.tour{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.tour>*{min-width:0}
+.tabs{display:flex;flex-direction:column;gap:6px}
+.tab{display:block;text-align:left;width:100%;border:1px solid transparent;background:none;padding:18px 20px;border-radius:18px;cursor:pointer;color:var(--ink);transition:background .2s,border-color .2s}
+.tab:hover{background:var(--surface)}
+.tab[aria-selected="true"]{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow-sm)}
+.tab .t{display:flex;align-items:center;gap:12px;font-family:var(--f-display);font-size:20px;font-weight:700}
+.tab .t svg{width:22px;height:22px;color:var(--accent);flex:none}
+.tab .d{color:var(--muted);font-size:16px;margin:6px 0 0 34px;display:none}
+.tab[aria-selected="true"] .d{display:block}
+.tour-shot{display:flex;justify-content:center;background:radial-gradient(circle at 50% 30%,var(--accent-soft),transparent 70%);border-radius:32px;padding:20px 0}
+.tour-shot .phone{position:relative;left:auto;transform:none}
+.tour-shot img{transition:opacity .25s ease}
+@media (max-width:860px){.tour{grid-template-columns:1fr;gap:28px}.tour-shot{order:-1}.tour-shot .phone{width:250px}}
+
+/* tiles */
 .grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;min-width:0}
-.tile .ic{width:44px;height:44px;border-radius:13px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:16px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px;min-width:0}
+.tile .ic{width:46px;height:46px;border-radius:14px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:18px}
 .tile .ic svg{width:22px;height:22px}
 .tile h3{font-size:20px;margin-bottom:6px}
 .tile p{color:var(--muted);font-size:16px}
 @media (max-width:900px){.grid6{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.grid6{grid-template-columns:1fr}}
 
-.feature-row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:36px 0}
-.feature-row+.feature-row{border-top:1px solid var(--line)}
-.feature-row.flip .shot{order:2}
-.feature-row .shot{display:flex;justify-content:center;align-items:flex-start;height:500px;background:var(--surface-2);border-radius:28px;padding:36px 20px 0;overflow:hidden;min-width:0;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}
-.feature-row .shot img{width:300px;border-radius:28px 28px 0 0;border:8px solid #0A0F0D;border-bottom:0}
-.feature-row h3{font-size:clamp(26px,3.2vw,36px);line-height:1.1;margin:10px 0 14px}
-.feature-row p{color:var(--muted);font-size:18px;max-width:42ch}
-.checks{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
-.checks li{display:flex;gap:10px;align-items:flex-start;font-weight:500}
-.checks svg{width:20px;height:20px;flex:none;color:var(--accent);margin-top:2px}
-@media (max-width:860px){.feature-row .shot{height:400px}.feature-row{grid-template-columns:1fr;gap:28px}.feature-row.flip .shot{order:0}.feature-row .shot img{width:240px}}
+/* compare */
+.table-wrap{overflow-x:auto;border-radius:24px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;min-width:640px;font-size:16px}
+th,td{padding:18px 22px;text-align:left;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+thead th{font-family:var(--f-display);font-size:17px;font-weight:700;background:var(--bg-2)}
+thead th.us{background:var(--deep);color:var(--deep-ink)}
+td.us{background:color-mix(in srgb,var(--accent-soft) 45%,transparent);font-weight:600}
+td:first-child{font-weight:600}
+.yes,.no,.some{display:inline-flex;align-items:center;gap:6px}
+.yes svg{width:20px;height:20px;color:var(--good)}
+.no svg{width:20px;height:20px;color:var(--bad)}
+.some{color:var(--muted)}
 
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
-.step{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;min-width:0}
-.step .n{font-family:var(--f-display);font-weight:700;font-size:15px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);margin-bottom:16px}
-.step h3{font-size:20px;margin-bottom:6px}
-.step p{color:var(--muted);font-size:16px}
-@media (max-width:800px){.steps{grid-template-columns:1fr}}
+/* privacy */
+.band{background:var(--surface);border:1px solid var(--line);border-radius:32px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center}
+.band>*{min-width:0}
+.band h2{font-size:clamp(30px,4vw,44px);line-height:1.06;margin-top:12px}
+.band p.sub{color:var(--muted);margin-top:14px;font-size:18px}
+.band ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.band li{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:18px}
+.band li svg{width:24px;height:24px;color:var(--accent);margin-bottom:10px}
+.band li b{display:block;font-size:16.5px}
+.band li span{color:var(--muted);font-size:15px}
+@media (max-width:900px){.band{grid-template-columns:1fr}}
+@media (max-width:520px){.band ul{grid-template-columns:1fr}}
 
-.band{background:var(--deep);color:var(--deep-ink);border-radius:32px;padding:56px;display:grid;grid-template-columns:1fr 1fr;gap:40px;position:relative;overflow:hidden}
-.band::after{content:"";position:absolute;right:-90px;top:-90px;width:320px;height:320px;border-radius:50%;border:48px solid rgba(255,255,255,.04)}
-.band .eyebrow{color:var(--gold)}
-.band h2{font-size:clamp(30px,4vw,44px);line-height:1.08;margin-top:10px}
-.band p{color:var(--deep-muted);margin-top:14px;font-size:18px}
-.band ul{list-style:none;padding:0;margin:0;display:grid;gap:16px;align-content:center;position:relative;z-index:1}
-.band li{display:flex;gap:12px;align-items:flex-start}
-.band li svg{width:22px;height:22px;flex:none;color:var(--gold);margin-top:2px}
-.band li b{display:block;color:var(--deep-ink)}
-.band li span{color:var(--deep-muted);font-size:15.5px}
-@media (max-width:860px){.band{grid-template-columns:1fr;padding:36px 24px;border-radius:24px}}
+/* pricing */
+.price{max-width:520px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:36px;box-shadow:var(--shadow-sm);text-align:center}
+.price .amt{font-family:var(--f-display);font-size:72px;font-weight:700;letter-spacing:-.03em;line-height:1;margin:14px 0 6px}
+.price .amt small{font-size:20px;color:var(--muted);font-weight:600;letter-spacing:0}
+.price ul{list-style:none;padding:0;margin:26px 0 30px;display:grid;gap:12px;text-align:left}
+.price li{display:flex;gap:10px;align-items:flex-start}
+.price li svg{width:20px;height:20px;color:var(--accent);flex:none;margin-top:3px}
 
-.faq{max-width:780px}
-details{border-bottom:1px solid var(--line);padding:4px 0}
-summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-weight:700;font-size:18px}
+/* faq */
+.faq{max-width:820px;margin:0 auto}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;font-weight:700;font-size:18.5px}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-family:var(--f-display);font-size:26px;font-weight:500;color:var(--accent);transition:transform .2s ease;line-height:1}
+summary::after{content:"+";font-family:var(--f-display);font-size:28px;font-weight:500;color:var(--accent);transition:transform .2s ease;line-height:1;flex:none}
 details[open] summary::after{transform:rotate(45deg)}
-details p{color:var(--muted);padding:0 0 20px;max-width:65ch}
+details p{color:var(--muted);padding:0 0 22px;max-width:68ch}
 
-.cta-final{text-align:center;padding:80px 0 96px}
-.cta-final h2{font-size:clamp(32px,5vw,56px);line-height:1.05;max-width:16ch;margin:0 auto}
-.cta-final p{color:var(--muted);margin:16px auto 30px;font-size:18px;max-width:46ch}
-.cta-final .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+/* final cta */
+.final{background:var(--deep);color:var(--deep-ink);border-radius:32px;padding:clamp(40px,7vw,80px) 24px;text-align:center;position:relative;overflow:hidden}
+.final::before{content:"";position:absolute;left:50%;top:-180px;transform:translateX(-50%);width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(240,195,90,.18),transparent 65%)}
+.final>*{position:relative}
+.final h2{font-size:clamp(34px,5.4vw,60px);line-height:1.02;max-width:15ch;margin:0 auto}
+.final p{color:var(--deep-muted);margin:18px auto 32px;font-size:18.5px;max-width:44ch}
+.final .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.final .btn-ghost{background:transparent;color:var(--deep-ink);border-color:rgba(255,255,255,.25)}
 
-footer{border-top:1px solid var(--line);padding:28px 0 calc(28px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:14.5px}
-footer .wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center;justify-content:space-between}
-footer nav{display:flex;gap:20px}
-footer a{text-decoration:none}
-footer a:hover{color:var(--ink)}
+footer{padding:64px 0 calc(32px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:15px}
+.foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.foot>*{min-width:0}
+.foot h4{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);margin:0 0 14px}
+.foot ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--ink)}
+.foot .tag{margin-top:12px;max-width:32ch}
+.legal{border-top:1px solid var(--line);margin-top:44px;padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:14px}
+@media (max-width:760px){.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#11594A"/><stop offset="1" stop-color="#0A3129"/></linearGradient>
+    <symbol id="logo" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="url(#lg)"/><path d="M24 76V40l26 24 26-24v36" fill="none" stroke="#EAF5F0" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="76" cy="21" r="7.5" fill="#F0C35A"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-yes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".15"/><path d="M16.5 8.5l-6 6.5-3-3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".13"/><path d="M15 9l-6 6M9 9l6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></g></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6 0 9.5 7 9.5 7a17 17 0 0 1-3 3.8M6.6 6.6A17 17 0 0 0 2.5 12S6 19 12 19a9.7 9.7 0 0 0 5.4-1.6"/></g></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
     <symbol id="i-pie" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.4A9 9 0 0 1 20.6 9H15z"/></g></symbol>
     <symbol id="i-target" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></g></symbol>
     <symbol id="i-down" viewBox="0 0 24 24"><path d="M3 6l7 7 4-4 7 7M21 10v6h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18M5 16l4-5 4 3 6-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
     <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12A8 8 0 0 1 18.3 7.1M18 3v4.5h-4.5M6 21v-4.5h4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></g></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M11 18.5h2"/></g></symbol>
   </defs>
 </svg>
 
 <header class="nav" id="nav">
   <div class="wrap">
-    <a class="logo" href="./"><img src="icon-192.png" alt="" width="34" height="34">My Money</a>
+    <a class="logo" href="./" aria-label="My Money home"><svg aria-hidden="true"><use href="#logo"/></svg>My Money</a>
     <nav class="nav-links" aria-label="Main">
-      <a href="#features">Features</a><a href="#how">How it works</a><a href="#privacy">Privacy</a><a href="#faq">FAQ</a>
+      <a href="#tour">Features</a><a href="#compare">Compare</a><a href="#privacy">Privacy</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
     </nav>
     <div class="nav-cta">
       <a class="btn btn-ghost signin" href="app.html">Sign in</a>
@@ -184,145 +273,188 @@ footer a:hover{color:var(--ink)}
   <section class="hero">
     <div class="wrap">
       <div>
-        <div class="eyebrow">Free personal finance app</div>
-        <h1>Know what's <em>safe to spend.</em> Every day.</h1>
-        <p class="lead">My Money brings your budgets, bills, debts and savings goals into one calm place, so you always know where you stand before you tap your card.</p>
+        <span class="pill"><b>FREE</b>Private budgeting. No bank logins.</span>
+        <h1>Know what's <span class="hl">safe to spend.</span> Every day.</h1>
+        <p class="lead">My Money turns your budgets, bills, debts and goals into one clear daily number, so you can tap your card without second-guessing.</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="app.html#signup">Create free account</a>
-          <a class="btn btn-ghost" href="app.html#sample">Try the demo</a>
+          <a class="btn btn-primary" href="app.html#signup">Create free account<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-ghost" href="app.html#sample">Try the live demo</a>
         </div>
         <div class="trust">
-          <span><svg><use href="#i-check"/></svg>No bank logins</span>
-          <span><svg><use href="#i-check"/></svg>No ads</span>
-          <span><svg><use href="#i-check"/></svg>Phone and computer</span>
+          <span><svg aria-hidden="true"><use href="#i-check"/></svg>Free</span>
+          <span><svg aria-hidden="true"><use href="#i-check"/></svg>No ads, no data selling</span>
+          <span><svg aria-hidden="true"><use href="#i-check"/></svg>iPhone, Android and computer</span>
         </div>
       </div>
-      <div class="phones" aria-hidden="true">
-        <div class="phone back"><img src="screen-debt.webp" alt="" width="540" height="1173"></div>
-        <div class="phone front"><img src="screen-home.webp" alt="" width="540" height="1173"></div>
-        <div class="float-card"><div class="k">Debt-free by (example)</div><div class="v">Jun 2030</div><div class="s">$150/mo extra saves $1,445</div></div>
+      <div class="stage">
+        <div class="phone">
+          <picture><source srcset="screen-home-dark.webp" media="(prefers-color-scheme: dark)"><img src="screen-home.webp" alt="My Money home screen showing $43 safe to spend today, payday in 8 days and a spending pace chart" width="540" height="1173" fetchpriority="high"></picture>
+        </div>
+        <div class="fcard a" aria-hidden="true"><div class="row"><span class="ico"><svg><use href="#i-cal"/></svg></span><div><div class="k">Next payday</div><div class="v">in 8 days</div></div></div></div>
+        <div class="fcard b" aria-hidden="true"><div class="k">Debt-free by</div><div class="v gold">Jun 2030</div><div class="s">Extra $150/mo saves $1,445</div></div>
       </div>
     </div>
   </section>
 
-  <section id="features" style="padding-top:40px">
+  <section id="try" style="padding-top:24px">
+    <div class="wrap">
+      <div class="calc">
+        <div>
+          <div class="eyebrow">Try it now</div>
+          <h2>What's safe to spend today?</h2>
+          <p class="sub">This is the number My Money keeps up to date for you. Move the sliders to see how it works.</p>
+          <div class="ctrl">
+            <label for="c-budget">Everyday budget this month <output id="o-budget" class="num">$1,200</output></label>
+            <input type="range" id="c-budget" min="200" max="5000" step="50" value="1200">
+          </div>
+          <div class="ctrl">
+            <label for="c-spent">Spent so far <output id="o-spent" class="num">$540</output></label>
+            <input type="range" id="c-spent" min="0" max="5000" step="10" value="540">
+          </div>
+        </div>
+        <div class="result" aria-live="polite">
+          <div class="k">Safe to spend today</div>
+          <div class="big num" id="r-day">$33</div>
+          <div class="note" id="r-note"><b>$660</b> left for the next 20 days</div>
+          <div class="bar"><i id="r-bar" style="width:45%"></i></div>
+          <div class="legend"><span id="r-used">45% used</span><span id="r-month">November</span></div>
+          <a class="btn btn-gold" href="app.html#signup">Get my real number<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tour">
     <div class="wrap">
       <div class="sec-head">
-        <div class="eyebrow">Everything in one place</div>
-        <h2>The money questions you ask every week, answered at a glance.</h2>
+        <div class="eyebrow">Product tour</div>
+        <h2>Everything about your money, on one calm screen.</h2>
       </div>
-      <div class="grid6">
-        <div class="tile"><div class="ic"><svg><use href="#i-home"/></svg></div><h3>Safe to spend</h3><p>One daily number from your everyday budgets and the days left in the month.</p></div>
-        <div class="tile"><div class="ic"><svg><use href="#i-pie"/></svg></div><h3>Budgets that keep up</h3><p>Bills and everyday categories show spent, left and whether you're on track.</p></div>
-        <div class="tile"><div class="ic"><svg><use href="#i-down"/></svg></div><h3>Debt payoff planner</h3><p>Highest interest or smallest balance first. See your debt-free month and interest saved.</p></div>
-        <div class="tile"><div class="ic"><svg><use href="#i-target"/></svg></div><h3>Savings goals</h3><p>Emergency fund, a trip, a down payment. Know what to set aside each month.</p></div>
-        <div class="tile"><div class="ic"><svg><use href="#i-chart"/></svg></div><h3>Net worth over time</h3><p>Assets, debts and a six-month trend, built from what you log.</p></div>
-        <div class="tile"><div class="ic"><svg><use href="#i-sync"/></svg></div><h3>Synced everywhere</h3><p>Log a coffee on your phone, review your month on your laptop. Same numbers.</p></div>
+      <div class="tour">
+        <div class="tabs" role="tablist" aria-label="Features">
+          <button class="tab" role="tab" aria-selected="true" data-shot="home" id="t-home"><span class="t"><svg aria-hidden="true"><use href="#i-home"/></svg>Home</span><span class="d">Safe-to-spend, payday countdown, cash on hand and a spending pace chart against last month.</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-shot="budget" id="t-budget"><span class="t"><svg aria-hidden="true"><use href="#i-pie"/></svg>Budget</span><span class="d">Bills and everyday categories show what's spent and what's left, and flag anything near its limit.</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-shot="debt" id="t-debt"><span class="t"><svg aria-hidden="true"><use href="#i-down"/></svg>Debt payoff</span><span class="d">Highest interest or smallest balance first. See your debt-free month and what extra payments save.</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-shot="goals" id="t-goals"><span class="t"><svg aria-hidden="true"><use href="#i-target"/></svg>Goals</span><span class="d">Set a target and a date and see how much to put aside each month.</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-shot="networth" id="t-networth"><span class="t"><svg aria-hidden="true"><use href="#i-chart"/></svg>Net worth</span><span class="d">Assets, debts and a six-month trend, built from what you log.</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-shot="activity" id="t-activity"><span class="t"><svg aria-hidden="true"><use href="#i-list"/></svg>Activity</span><span class="d">Every transaction by day, searchable, with monthly totals.</span></button>
+        </div>
+        <div class="tour-shot" role="tabpanel" id="tour-panel" aria-labelledby="t-home">
+          <div class="phone">
+            <picture><source id="tour-dark" srcset="screen-home-dark.webp" media="(prefers-color-scheme: dark)"><img id="tour-img" src="screen-home.webp" alt="My Money Home screen" width="540" height="1173" loading="lazy"></picture>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section style="padding-top:0">
     <div class="wrap">
-      <div class="feature-row">
-        <div class="shot"><img src="screen-budget.webp" alt="Budget screen showing spending against each category's monthly limit" width="540" height="1173"></div>
-        <div>
-          <div class="eyebrow">Budget</div>
-          <h3>See trouble coming before the month ends.</h3>
-          <p>Every category shows what's spent and what's left. Anything near its limit turns amber, anything over turns red, so you can adjust while it still matters.</p>
-          <ul class="checks">
-            <li><svg><use href="#i-check"/></svg>Separate fixed bills from everyday spending</li>
-            <li><svg><use href="#i-check"/></svg>Checks your budgets against your paycheck</li>
-            <li><svg><use href="#i-check"/></svg>Spending pace compared with last month</li>
-          </ul>
-        </div>
-      </div>
-      <div class="feature-row flip">
-        <div class="shot"><img src="screen-debt.webp" alt="Debt payoff screen showing a debt-free date and payoff order" width="540" height="1173"></div>
-        <div>
-          <div class="eyebrow">Debt payoff</div>
-          <h3>Put a date on being debt-free.</h3>
-          <p>Add your cards and loans with their APR and minimum payment. Slide the extra amount you can afford and watch the date move closer.</p>
-          <ul class="checks">
-            <li><svg><use href="#i-check"/></svg>Avalanche or snowball, your choice</li>
-            <li><svg><use href="#i-check"/></svg>Payoff month for every debt</li>
-            <li><svg><use href="#i-check"/></svg>Interest and months saved by paying extra</li>
-          </ul>
-        </div>
-      </div>
-      <div class="feature-row">
-        <div class="shot"><img src="screen-goals.webp" alt="Goals screen showing progress toward an emergency fund and a trip" width="540" height="1173"></div>
-        <div>
-          <div class="eyebrow">Goals</div>
-          <h3>Save on purpose, not on leftovers.</h3>
-          <p>Set a target and a date. My Money tells you how much to put aside each month and tracks your progress as you add to it.</p>
-          <ul class="checks">
-            <li><svg><use href="#i-check"/></svg>As many goals as you like</li>
-            <li><svg><use href="#i-check"/></svg>Monthly amount needed to hit your date</li>
-          </ul>
-        </div>
+      <div class="grid6">
+        <div class="tile"><div class="ic"><svg aria-hidden="true"><use href="#i-sync"/></svg></div><h3>Synced everywhere</h3><p>Log a coffee on your phone, review the month on your laptop. Same numbers, instantly.</p></div>
+        <div class="tile"><div class="ic"><svg aria-hidden="true"><use href="#i-phone"/></svg></div><h3>Feels like an app</h3><p>Add it to your home screen and it opens full screen, even offline.</p></div>
+        <div class="tile"><div class="ic"><svg aria-hidden="true"><use href="#i-download"/></svg></div><h3>Your data, portable</h3><p>Export to CSV for Excel, or make a full backup whenever you like.</p></div>
       </div>
     </div>
   </section>
 
-  <section id="how" style="padding-top:20px">
+  <section id="compare" style="padding-top:24px">
     <div class="wrap">
       <div class="sec-head">
-        <div class="eyebrow">How it works</div>
-        <h2>Set up in about five minutes.</h2>
+        <div class="eyebrow">Compare</div>
+        <h2>The clarity of an app, the privacy of a spreadsheet.</h2>
       </div>
-      <div class="steps">
-        <div class="step"><div class="n">1</div><h3>Create your account</h3><p>Just an email and password. No bank connection, no card required.</p></div>
-        <div class="step"><div class="n">2</div><h3>Add balances and budgets</h3><p>Enter what's in your accounts, what you owe, and a rough monthly amount for each category.</p></div>
-        <div class="step"><div class="n">3</div><h3>Log as you go</h3><p>Tap + after you spend. Your safe-to-spend number and budgets update instantly.</p></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col"><span class="sr" style="position:absolute;left:-9999px">Feature</span></th><th scope="col" class="us">My Money</th><th scope="col">Spreadsheet</th><th scope="col">Bank-linked apps</th></tr></thead>
+          <tbody>
+            <tr><td>Cost</td><td class="us">Free</td><td>Free</td><td>Usually a monthly subscription</td></tr>
+            <tr><td>Keeps your bank password private</td><td class="us"><span class="yes"><svg><use href="#i-yes"/></svg>Yes</span></td><td><span class="yes"><svg><use href="#i-yes"/></svg>Yes</span></td><td><span class="no"><svg><use href="#i-no"/></svg>Shares a connection to your bank</span></td></tr>
+            <tr><td>Daily safe-to-spend number</td><td class="us"><span class="yes"><svg><use href="#i-yes"/></svg>Built in</span></td><td><span class="some">Build it yourself</span></td><td><span class="some">Some apps</span></td></tr>
+            <tr><td>Debt payoff planner</td><td class="us"><span class="yes"><svg><use href="#i-yes"/></svg>Built in</span></td><td><span class="some">Build it yourself</span></td><td><span class="some">Some apps</span></td></tr>
+            <tr><td>Easy on your phone</td><td class="us"><span class="yes"><svg><use href="#i-yes"/></svg>Yes</span></td><td><span class="no"><svg><use href="#i-no"/></svg>Fiddly</span></td><td><span class="yes"><svg><use href="#i-yes"/></svg>Yes</span></td></tr>
+            <tr><td>Ready in</td><td class="us">About 5 minutes</td><td>Hours of setup</td><td>Minutes, after linking accounts</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
-  <section id="privacy" style="padding-top:20px">
+  <section id="privacy" style="padding-top:24px">
     <div class="wrap">
       <div class="band">
         <div>
-          <div class="eyebrow">Privacy</div>
+          <div class="eyebrow">Privacy and security</div>
           <h2>Your money is your business.</h2>
-          <p>We don't need your bank password, we don't show ads, and we never sell your data. You decide what goes in, and you can take it out or delete it any time.</p>
+          <p class="sub">We never ask for your bank password, we don't show ads, and we never sell your data. You decide what goes in, and you can take it out or delete it any time.</p>
         </div>
         <ul>
-          <li><svg><use href="#i-shield"/></svg><div><b>Only you can see your data</b><span>Each account is locked to its owner by database security rules.</span></div></li>
-          <li><svg><use href="#i-shield"/></svg><div><b>Encrypted in transit and at rest</b><span>Every connection uses HTTPS, and stored data is encrypted.</span></div></li>
-          <li><svg><use href="#i-shield"/></svg><div><b>Export or delete any time</b><span>Download a CSV or backup, or delete your account and all its data in Settings.</span></div></li>
+          <li><svg aria-hidden="true"><use href="#i-lock"/></svg><b>Encrypted</b><span>HTTPS for every connection, and data encrypted at rest.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-shield"/></svg><b>Locked to you</b><span>Database rules make sure only you can read your data.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-eye"/></svg><b>No tracking</b><span>No ads, no analytics cookies, no selling data.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-download"/></svg><b>Yours to keep</b><span>Export or permanently delete your account in Settings.</span></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section id="faq" style="padding-top:20px">
+  <section id="pricing" style="padding-top:24px">
     <div class="wrap">
-      <div class="sec-head"><div class="eyebrow">FAQ</div><h2>Questions, answered.</h2></div>
+      <div class="sec-head center"><div class="eyebrow">Pricing</div><h2>One plan. It's free.</h2></div>
+      <div class="price">
+        <div class="eyebrow">My Money</div>
+        <div class="amt num">$0 <small>/ month</small></div>
+        <p style="color:var(--muted)">Every feature, on every device.</p>
+        <ul>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Daily safe-to-spend and payday countdown</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Unlimited accounts, budgets and goals</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Debt payoff planner</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Sync across phone and computer</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>CSV export and backups</li>
+        </ul>
+        <a class="btn btn-primary" style="width:100%" href="app.html#signup">Create free account</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-head center"><div class="eyebrow">FAQ</div><h2>Questions, answered.</h2></div>
       <div class="faq">
-        <details><summary>Is My Money free?</summary><p>Yes. Creating an account and using every feature is free.</p></details>
-        <details><summary>Do I have to connect my bank?</summary><p>No. You enter balances and log transactions yourself, which takes a few seconds each. Many people find logging by hand makes them more aware of their spending.</p></details>
-        <details><summary>Does it work on my iPhone or Android phone?</summary><p>Yes. Open My Money in your phone's browser and add it to your home screen. On iPhone, tap Share in Safari, then Add to Home Screen. On Android, tap the menu in Chrome, then Install app. It opens full screen like any other app.</p></details>
-        <details><summary>Can I use it without an account?</summary><p>Yes. Choose "Use without an account" and your data stays in that browser only. You can create an account later and your data moves into it automatically.</p></details>
-        <details><summary>How do I record a credit card payment?</summary><p>Add a Transfer from your checking account to the card. Transfers move money between your accounts without counting as spending, so your budgets stay accurate.</p></details>
+        <details><summary>Is My Money really free?</summary><p>Yes. Creating an account and using every feature costs nothing, and there are no ads.</p></details>
+        <details><summary>Do I have to connect my bank?</summary><p>No. You enter balances and log transactions yourself, which takes a few seconds each. Many people find that logging by hand makes them more aware of their spending.</p></details>
+        <details><summary>How is "safe to spend" calculated?</summary><p>It takes what's left in your everyday budgets this month and divides it by the days remaining, including today. Bills, transfers and card payments are kept separate so the number reflects day-to-day spending.</p></details>
+        <details><summary>Does it work on iPhone and Android?</summary><p>Yes. Open My Money in your phone's browser and add it to your home screen. On iPhone, tap Share in Safari, then Add to Home Screen. On Android, tap the menu in Chrome, then Install app. It opens full screen like any other app.</p></details>
+        <details><summary>Is my data safe?</summary><p>Connections are encrypted, stored data is encrypted at rest, and database rules make sure each account can only see its own data. Read the <a href="privacy.html" style="color:var(--accent)">privacy policy</a> for details.</p></details>
+        <details><summary>Can I use it without an account?</summary><p>Yes. Choose "Use without an account" and your data stays in that browser only. If you create an account later, your data moves into it automatically.</p></details>
         <details><summary>How do I delete my account?</summary><p>Open Settings from the gear icon on the Home screen and choose Delete my account. Your account and all of its data are removed permanently.</p></details>
       </div>
     </div>
   </section>
 
-  <section class="cta-final">
+  <section style="padding-top:24px">
     <div class="wrap">
-      <h2>Start knowing where your money goes.</h2>
-      <p>Free, private and ready in five minutes. Try the demo first if you'd like to look around.</p>
-      <div class="ctas"><a class="btn btn-primary" href="app.html#signup">Create free account</a><a class="btn btn-ghost" href="app.html#sample">Try the demo</a></div>
+      <div class="final">
+        <h2>Start knowing where your money goes.</h2>
+        <p>Free, private and ready in five minutes. Look around the demo first if you'd like.</p>
+        <div class="ctas"><a class="btn btn-gold" href="app.html#signup">Create free account<svg aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-ghost" href="app.html#sample">Try the live demo</a></div>
+      </div>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© <span id="yr">2026</span> My Money</span>
-    <nav aria-label="Footer"><a href="privacy.html">Privacy</a><a href="support.html">Support</a><a href="app.html">Sign in</a></nav>
+    <div class="foot">
+      <div>
+        <a class="logo" href="./"><svg aria-hidden="true"><use href="#logo"/></svg>My Money</a>
+        <p class="tag">Budgets, goals and a debt-free date in one calm, private app.</p>
+      </div>
+      <div><h4>Product</h4><ul><li><a href="#tour">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="app.html#sample">Live demo</a></li><li><a href="app.html">Sign in</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="support.html">Support</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy policy</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© <span id="yr">2026</span> My Money. All rights reserved.</span><span>Not financial advice. Numbers are estimates based on what you enter.</span></div>
   </div>
 </footer>
 <script src="site.js"></script>

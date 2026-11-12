@@ -1,7 +1,7 @@
 // Offline support for the My Money app shell. Account data (Supabase) is never cached here.
-const CACHE = "my-money-v4";
+const CACHE = "my-money-v5";
 const SHELL = ["./", "index.html", "app.html", "app.js", "config.js", "supabase.js", "manifest.webmanifest",
-  "bricolage.woff2", "figtree-400.woff2", "figtree-500.woff2", "figtree-600.woff2", "figtree-700.woff2", "icon-192.png"];
+  "bricolage.woff2", "figtree-400.woff2", "figtree-500.woff2", "figtree-600.woff2", "figtree-700.woff2", "icon-192.png", "logo.svg"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))); self.clients.claim(); });
 self.addEventListener("fetch", e => {

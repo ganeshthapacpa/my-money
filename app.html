@@ -12,7 +12,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="My Money">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>My Money</title>
@@ -169,7 +170,7 @@ nav.tabs .wrap{display:grid;grid-template-columns:repeat(5,1fr);align-items:cent
 
 /* onboarding */
 .ob{min-height:100%;display:flex;flex-direction:column;gap:18px;padding-block:28px 40px}
-.ob .brand{font-family:var(--f-display);font-weight:700;font-size:15px;color:var(--accent);letter-spacing:.02em}
+.ob .brand{font-family:var(--f-display);font-weight:700;font-size:19px;color:var(--ink);letter-spacing:-.01em;display:inline-flex;align-items:center;gap:9px;align-self:flex-start}.ob .brand img{width:30px;height:30px;border-radius:8px}
 .ob h2{font-family:var(--f-display);font-size:32px;line-height:1.08;margin:0;letter-spacing:-.02em;text-wrap:balance}
 .ob p{margin:0;color:var(--muted);max-width:44ch}
 .steps{display:flex;gap:6px}

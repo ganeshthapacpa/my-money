@@ -256,8 +256,8 @@ function toast(msg) {
 function render() {
   const app = $("#app");
   if (S.phase === "auth") { app.innerHTML = renderAuth(); const f = app.querySelector("[autofocus]"); if (f) f.focus(); return; }
-  if (S.phase === "offline") { app.innerHTML = `<div class="wrap ob"><a class="brand" href="./">MY MONEY</a><h2>You're offline</h2><p>Connect to the internet to load your account for the first time on this device.</p><button class="btn block" data-act="retry">Try again</button><button class="btn ghost block" data-act="sign-out">Sign out</button></div>`; return; }
-  if (S.phase === "loading") { app.innerHTML = `<div class="wrap ob"><a class="brand" href="./">MY MONEY</a><p>Opening your money…</p></div>`; return; }
+  if (S.phase === "offline") { app.innerHTML = `<div class="wrap ob"><a class="brand" href="./"><img src="logo.svg" alt="" width="30" height="30">My Money</a><h2>You're offline</h2><p>Connect to the internet to load your account for the first time on this device.</p><button class="btn block" data-act="retry">Try again</button><button class="btn ghost block" data-act="sign-out">Sign out</button></div>`; return; }
+  if (S.phase === "loading") { app.innerHTML = `<div class="wrap ob"><a class="brand" href="./"><img src="logo.svg" alt="" width="30" height="30">My Money</a><p>Opening your money…</p></div>`; return; }
   if (!S.settings) { app.innerHTML = renderOnboarding(); return; }
   const v = S.view || S.tab;
   const titles = { home: greeting(), activity: "Activity", budget: "Budget", plan: "Plan", accounts: "Accounts" };
@@ -735,7 +735,7 @@ function guessCurrency() { try { const c = new Intl.NumberFormat().resolvedOptio
 function renderOnboarding() {
   const o = S.ob;
   if (!o) return `<div class="wrap ob">
-    <a class="brand" href="./">MY MONEY</a>
+    <a class="brand" href="./"><img src="logo.svg" alt="" width="30" height="30">My Money</a>
     <h2>Every dollar, one calm place.</h2>
     <p>Track spending, set budgets, plan your debt payoff and save toward goals. Your data stays private to you.</p>
     <div class="card" style="display:flex;flex-direction:column;gap:14px">
@@ -903,7 +903,7 @@ function renderAuth() {
   const head = { signin: ["Welcome back", "Sign in to see your money on any device."], signup: ["Create your free account", "Your budgets, goals and transactions, synced across your phone and computer."], reset: ["Reset your password", "We'll email you a link to choose a new password."], newpass: ["Choose a new password", "Use at least 8 characters."] }[t];
   const btn = { signin: "Sign in", signup: "Create account", reset: "Send reset link", newpass: "Save new password" }[t];
   return `<div class="wrap ob" style="max-width:460px">
-    <a class="brand" href="./">MY MONEY</a>
+    <a class="brand" href="./"><img src="logo.svg" alt="" width="30" height="30">My Money</a>
     <h2>${head[0]}</h2><p>${head[1]}</p>
     ${t === "signin" || t === "signup" ? `<div class="seg"><button class="${t === "signin" ? "on" : ""}" data-act="auth-tab" data-v="signin">Sign in</button><button class="${t === "signup" ? "on" : ""}" data-act="auth-tab" data-v="signup">Create account</button></div>` : ""}
     <form id="auth-form" class="card" style="display:flex;flex-direction:column;gap:12px" novalidate>
@@ -1002,7 +1002,7 @@ async function boot() {
   const cfg = window.MYMONEY_CONFIG || {};
   const ready = window.supabase && cfg.supabaseUrl && cfg.supabaseAnonKey && !/YOUR-/i.test(cfg.supabaseUrl + cfg.supabaseAnonKey);
   if (!ready) { S.noBackend = true; return useLocal(); }
-  if (isSecretKey(cfg.supabaseAnonKey)) { document.getElementById("app").innerHTML = `<div class="wrap ob"><div class="brand">MY MONEY</div><h2>Setup problem</h2><p>config.js contains a secret Supabase key. Replace it with the anon / publishable key, and rotate the secret key in Supabase right away.</p></div>`; return; }
+  if (isSecretKey(cfg.supabaseAnonKey)) { document.getElementById("app").innerHTML = `<div class="wrap ob"><div class="brand"><img src="logo.svg" alt="" width="30" height="30">My Money</div><h2>Setup problem</h2><p>config.js contains a secret Supabase key. Replace it with the anon / publishable key, and rotate the secret key in Supabase right away.</p></div>`; return; }
   Store.sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
   Store.sb.auth.onAuthStateChange((ev, session) => setTimeout(() => onAuth(ev, session), 0));
 }
